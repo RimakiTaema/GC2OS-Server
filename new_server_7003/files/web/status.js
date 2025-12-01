@@ -57,12 +57,12 @@ function loadUI() {
         }
         if (title === userObject['title']) {
             titlesHtml += `
-                <img src="/files/image/title/${title}.png" alt="Title ${title}" class="title-image-selected">
+                <img src="/files/image/title/${title}.png" alt="Title ${title}" class="title-image-selected" loading="lazy">
             `;
         } else {
             titlesHtml += `
                 <a onclick="setTitle(${title})" class="title-link">
-                    <img src="/files/image/title/${title}.png" alt="Title ${title}" class="title-image">
+                    <img src="/files/image/title/${title}.png" alt="Title ${title}" class="title-image" loading="lazy">
                 </a>
             `;
         }
@@ -162,6 +162,5 @@ function restoreBaseStructure() {
 
 
 window.onload = function(){
-    restoreBaseStructure();
     on_initialize();
 };

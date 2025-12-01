@@ -323,7 +323,7 @@ async def ttag(request: Request):
             bind_state = await get_bind(user_id)
 
             if bind_state and bind_state['is_verified'] == 1:
-                bind_element = f'<p>Email verified: {bind_state["bind_acc"]}\nTo remove a bind, contact the administrator.</p>'
+                bind_element = f'<p>Email verified: {bind_state["bind_account"]}\nTo remove a bind, contact the administrator.</p>'
             else:
                 bind_element = f"""
                     <form action="/send_email/?{original_field}" method="post">
@@ -348,9 +348,9 @@ async def ttag(request: Request):
             
         elif AUTHORIZATION_MODE == 2:
             bind_state = await get_bind(user_id)
-            bind_code = await generate_salt(username, user_id)
+            bind_code = await generate_salt(user_id)
             if bind_state and bind_state['is_verified'] == 1:
-                bind_element = f'<p>Discord verified: {bind_state["bind_acc"]}<br>To remove a bind, contact the administrator.</p>'
+                bind_element = f'<p>Discord verified: {bind_state["bind_account"]}<br>To remove a bind, contact the administrator.</p>'
             else:
                 bind_element = f"""
                     <p>To receive a verification code, please join our Discord server 'https://discord.gg/vugfJdc2rk' and use the !bind command with your account name and the following code. Do not leak this code to others.</p>

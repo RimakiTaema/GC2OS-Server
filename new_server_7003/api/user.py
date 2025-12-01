@@ -12,11 +12,12 @@ from api.misc import get_model_pak, get_tune_pak, get_skin_pak, get_m4a_path, ge
 from api.database import decrypt_fields_to_user_info, refresh_bind, get_user_entitlement_from_devices, set_device_data_using_decrypted_fields, create_device
 from api.crypt import decrypt_fields
 from api.template import START_AVATARS, START_STAGES, START_XML, SYNC_XML
+from config import SIMULTANEOUS_LOGINS
 
 async def info(request: Request):
     try:
         with open("web/history.html", "r", encoding="utf-8") as file:
-            html_content = file.read()
+            html_content = file.read().format(SIMULTANEOUS_LOGINS=SIMULTANEOUS_LOGINS)
     except FileNotFoundError:
         return inform_page("history.html not found", 1)
     
@@ -25,7 +26,7 @@ async def info(request: Request):
 async def history(request: Request):
     try:
         with open("web/history.html", "r", encoding="utf-8") as file:
-            html_content = file.read()
+            html_content = file.read().format(SIMULTANEOUS_LOGINS=SIMULTANEOUS_LOGINS)
     except FileNotFoundError:
         return inform_page("history.html not found", 1)
     

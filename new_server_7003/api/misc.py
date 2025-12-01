@@ -253,6 +253,8 @@ async def should_serve(decrypted_fields):
     
     if AUTHORIZATION_MODE and should_serve:
         user_info, _ = await decrypt_fields_to_user_info(decrypted_fields)
+        if not user_info:
+            return False
         bind_info = await get_bind(user_info["id"])
         if not bind_info or bind_info['is_verified'] != 1:
             should_serve = False

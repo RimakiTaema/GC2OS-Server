@@ -80,6 +80,7 @@
                 <li class="nav-item"><a class="nav-link" href="#" id="blacklistTab">Blacklist</a></li>
                 <li class="nav-item"><a class="nav-link" href="#" id="batchTokensTab">BatchTokens</a></li>
                 <li class="nav-item"><a class="nav-link" href="#" id="bindTab">Bind</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" id="websTab">Webs</a></li>
                 <li class="nav-item"><a class="nav-link" href="#" id="logsTab">Logs</a></li>
             </ul>
             <div class="d-flex ms-auto">
@@ -480,11 +481,12 @@ document.getElementById('whitelistTab').onclick = () => showTable("whitelist");
 document.getElementById('blacklistTab').onclick = () => showTable("blacklist");
 document.getElementById('batchTokensTab').onclick = () => showTable("batch_tokens");
 document.getElementById('bindTab').onclick = () => showTable("binds");
+document.getElementById('websTab').onclick = () => showTable("webs");
 document.getElementById('logsTab').onclick = () => showTable("logs");
 
 document.getElementById('logoutBtn').addEventListener('click', function() {
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    window.location.href = "/Login";
+    window.location.href = "/login";
 });
 
 document.getElementById('searchBtn').onclick = function() {
@@ -570,7 +572,7 @@ document.getElementById('insertRowForm').onsubmit = async function(e) {
     }
 };
 
-const validTabs = ["accounts", "results", "devices", "whitelist", "blacklist", "batch_tokens", "binds", "logs"];
+const validTabs = ["accounts", "results", "devices", "whitelist", "blacklist", "batch_tokens", "binds", "logs", "webs"];
 const lastTab = getCookie("lastTab");
 if (validTabs.includes(lastTab)) {
     showTable(lastTab);

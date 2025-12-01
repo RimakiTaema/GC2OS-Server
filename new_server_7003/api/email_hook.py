@@ -47,7 +47,7 @@ async def send_email_to_user(email, user_id):
     if not email or not check_email(email):
         return "Invalid Email."
     
-    verify = await player_database.fetch_one(binds.select().where(binds.c.bind_acc == email))
+    verify = await player_database.fetch_one(binds.select().where(binds.c.bind_account == email))
     if verify:
         if (datetime.utcnow() - verify['bind_date']).total_seconds() < 60:
             return "Too many requests. Please try again later."
@@ -57,14 +57,14 @@ async def send_email_to_user(email, user_id):
         await send_email(email, verify_code, "en")
         if verify:
             await player_database.execute(binds.update().where(binds.c.user_id == user_id).values(
-                bind_acc=email,
+                bind_account=email,
                 bind_code=verify_code,
                 bind_date=datetime.utcnow()
             ))
         else:
             query = binds.insert().values(
                 user_id=user_id,
-                bind_acc=email,
+                bind_account=email,
                 bind_code=verify_code,
                 is_verified=0,
                 bind_date=datetime.utcnow()

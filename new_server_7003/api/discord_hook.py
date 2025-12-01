@@ -49,7 +49,7 @@ async def verify_user(request: Request):
     if not decrypted_fields:
         return inform_page("FAILED:<br>Invalid request data.", 0)
     
-    account_record, device_record = await decrypt_fields_to_user_info(decrypted_fields)
+    account_record, _ = await decrypt_fields_to_user_info(decrypted_fields)
     if not account_record:
         return inform_page("FAILED:<br>User does not exist.", 0)
     
@@ -85,7 +85,7 @@ async def discord_get_token(request: Request, form):
     if bind_state and bind_state['is_verified'] < 0:
         return JSONResponse({"state": 0, "message": "This account cannot be binded now. Please contact the administrator."}, status_code=400)
 
-    binded_search_query = binds.select().where(binds.c.bind_acc == discord_id).where(binds.c.is_verified == 1)
+    binded_search_query = binds.select().where(binds.c.bind_account == discord_id).where(binds.c.is_verified == 1)
     binded_search_record = await player_database.fetch_one(binded_search_query)
 
     if binded_search_record:
@@ -99,17 +99,17 @@ async def discord_get_token(request: Request, form):
         if (datetime.utcnow() - bind_state['bind_date']).total_seconds() < 60:
             return JSONResponse({"state": 0, "message": "Too many requests. Please wait a while before retrying."}, status_code=400)
 
-    verify_code, hash_code = generate_otp()
+    verify_code, _ = generate_otp()
     if bind_state:
         await player_database.execute(binds.update().where(binds.c.user_id == user_id).values(
-            bind_acc=discord_id,
+            bind_account=discord_id,
             bind_code=verify_code,
             bind_date=datetime.utcnow()
         ))
     else:
         query = binds.insert().values(
             user_id=user_id,
-            bind_acc=discord_id,
+            bind_account=discord_id,
             bind_code=verify_code,
             is_verified=0,
             bind_date=datetime.utcnow()
@@ -124,7 +124,7 @@ async def discord_get_token(request: Request, form):
 async def discord_get_bind(request: Request, form):
     discord_id = form.get("discord_id")
 
-    query = binds.select().where(binds.c.bind_acc == discord_id).where(binds.c.is_verified == 1)
+    query = binds.select().where(binds.c.bind_account == discord_id).where(binds.c.is_verified == 1)
     bind_record = await player_database.fetch_one(query)
     bind_record = dict(bind_record) if bind_record else None
     if not bind_record:
@@ -145,7 +145,7 @@ async def discord_get_bind(request: Request, form):
 async def discord_ban(request: Request, form):
     discord_id = form.get("discord_id")
     
-    query = binds.select().where(binds.c.bind_acc == discord_id).where(binds.c.is_verified == 1)
+    query = binds.select().where(binds.c.bind_account == discord_id).where(binds.c.is_verified == 1)
     bind_record = await player_database.fetch_one(query)
 
     bind_record = dict(bind_record) if bind_record else None
@@ -166,7 +166,7 @@ async def discord_ban(request: Request, form):
 async def discord_unban(request: Request, form):
     discord_id = form.get("discord_id")
     
-    query = binds.select().where(binds.c.bind_acc == discord_id).where(binds.c.is_verified == -1)
+    query = binds.select().where(binds.c.bind_account == discord_id).where(binds.c.is_verified == -1)
     bind_record = await player_database.fetch_one(query)
     bind_record = dict(bind_record) if bind_record else None
 
