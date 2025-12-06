@@ -150,12 +150,12 @@ async def web_admin_table_set(request: Request):
             raise ValueError("Row data must be a JSON object.")
         id_field = None
         # Find primary key field (id or objectId)
-        for pk in ["id"]:
+        for pk in ["id", "device_id"]:
             if pk in row_data:
                 id_field = pk
                 break
         if not id_field:
-            raise ValueError("Row data must contain a primary key ('id' or 'objectId').")
+            raise ValueError("Row data must contain a primary key ('id' or 'device_id').")
         for key, value in row_data.items():
             if key not in schema:
                 raise ValueError(f"Field '{key}' does not exist in table schema.")
@@ -236,6 +236,11 @@ async def web_admin_table_delete(request: Request):
     table_name = params.get("table")
     row_id = params.get("id")
 
+    if not row_id:
+        row_id = params.get("device_id")
+        if not row_id:
+            return JSONResponse({"status": "failed", "message": "Row ID is required."}, status_code=402)
+
     if table_name not in TABLE_MAP:
         return JSONResponse({"status": "failed", "message": "Invalid table name."}, status_code=401)
     
@@ -244,8 +249,8 @@ async def web_admin_table_delete(request: Request):
     
     table, _ = TABLE_MAP[table_name]
 
-    if table_name in ["results"]:
-        delete_query = table.delete().where(table.c.rid == row_id)
+    if table_name in ["devices"]:
+        delete_query = table.delete().where(table.c.device_id == row_id)
     else:
         delete_query = table.delete().where(table.c.id == row_id)
 

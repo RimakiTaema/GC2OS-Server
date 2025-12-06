@@ -382,6 +382,7 @@ async def ttag(request: Request):
                 gcoin_mp_4='selected' if gcoin_mp == 4 else '',
                 gcoin_mp_5='selected' if gcoin_mp == 5 else '',
                 savefile_id=savefile_id,
+                debug_info=original_field,
                 
             )
     else:

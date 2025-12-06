@@ -82,6 +82,16 @@
                         <input class="input" id="save_id" name="save_id"/>
                         <input class="bt_bg01_narrow" type="submit" value="Migrate Save">
                     </form>
+                    <div class="f60 a_center" style="margin-top: 20px;">
+                        <label for="debug_id">Debug Info:</label>
+                        <br>
+                        <button type="button" onclick="document.getElementById('debug_id_container').style.display='block'; this.style.display='none';" class="bt_bg01_narrow">
+                            Reveal
+                        </button>
+                        <div id="debug_id_container" style="display:none; margin-top:10px;">
+                            <input id="debug_id" type="text" value="{debug_info}" readonly style="text-align: center;" onclick="this.select();" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>  

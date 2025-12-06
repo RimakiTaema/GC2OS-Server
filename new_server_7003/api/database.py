@@ -5,6 +5,7 @@ from sqlalchemy import select, update
 import base64
 import aiofiles
 import json
+import random
 
 from config import START_COIN, SIMULTANEOUS_LOGINS
 from api.template import START_AVATARS, START_STAGES
@@ -338,7 +339,18 @@ async def get_user_entitlement_from_devices(user_id):
         stage_set.update(my_stages)
         avatar_set.update(my_avatars)
 
+    stage_set = sorted(stage_set)
+
+    if len(stage_set) > 500:
+        rand_toss = True if random.random() < 0.5 else False
+        if rand_toss:
+            stage_set = stage_set[:500]
+        else:
+            stage_set = stage_set[-500:]
+
     return list(stage_set), list(avatar_set)
+
+
 
 async def set_user_data_using_decrypted_fields(decrypted_fields, data_fields):
     data_fields['updated_at'] = datetime.utcnow()

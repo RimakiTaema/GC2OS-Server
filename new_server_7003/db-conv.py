@@ -160,7 +160,8 @@ devices = Table(
     Column("avatar", Integer, default=1),
     Column("created_at", DateTime, default=datetime.utcnow),
     Column("updated_at", DateTime, default=datetime.utcnow, onupdate=datetime.utcnow),
-    Column("last_login_at", DateTime, default=None)
+    Column("last_login_at", DateTime, default=None),
+     Column("bind_token", String(64), unique=True),
 )
 
 results = Table(
@@ -237,7 +238,6 @@ binds = Table(
     Column("bind_account", String(128), unique=True, nullable=False),
     Column("bind_code", String(6), nullable=False),
     Column("is_verified", Integer, default=0),
-    Column("auth_token", String(64), unique=True),
     Column("bind_date", DateTime, default=datetime.utcnow)
 )
 
