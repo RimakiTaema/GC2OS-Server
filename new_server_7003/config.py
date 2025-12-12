@@ -73,6 +73,7 @@ BIND_SALT = "SET YOUR SALT HERE"
 
 DAILY_DOWNLOAD_LIMIT = 1073741824  # 1 GB
 GRANDFATHERED_ACCOUNT_LIMIT = 0  # Web center access, grandfathered old accounts get access regardless of auth mode
+SAVE_EXPORT_COOLDOWN = 60 * 60 * 24  # 24 hours in seconds
 
 '''
 SSL certificate path. If left blank, use HTTP.
