@@ -325,7 +325,7 @@ async def check_blacklist(decrypted_fields):
     result = await player_database.fetch_one(query)
     return result is None
 
-async def get_user_entitlement_from_devices(user_id):
+async def get_user_entitlement_from_devices(user_id, should_cap = True):
     devices_query = select(devices.c.my_stage, devices.c.my_avatar).where(devices.c.user_id == user_id)
     devices_list = await player_database.fetch_all(devices_query)
     devices_list = [dict(dev) for dev in devices_list] if devices_list else []
@@ -341,7 +341,7 @@ async def get_user_entitlement_from_devices(user_id):
 
     stage_set = sorted(stage_set)
 
-    if len(stage_set) > 500:
+    if should_cap and len(stage_set) > 500:
         rand_toss = True if random.random() < 0.5 else False
         if rand_toss:
             stage_set = stage_set[:500]
@@ -349,8 +349,6 @@ async def get_user_entitlement_from_devices(user_id):
             stage_set = stage_set[-500:]
 
     return list(stage_set), list(avatar_set)
-
-
 
 async def set_user_data_using_decrypted_fields(decrypted_fields, data_fields):
     data_fields['updated_at'] = datetime.utcnow()

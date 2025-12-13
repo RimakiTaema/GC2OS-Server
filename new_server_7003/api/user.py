@@ -101,6 +101,9 @@ async def start(request: Request):
                 now_count = 1
         else:
             now_count = current_day
+    else:
+        # Bug fix: In case the device does not exist, create it to avoid issues with daily rewards
+        await create_device(device_id, datetime.now())
 
     now_count_elem = daily_reward_elem.find("now_count")
     if now_count_elem is None:

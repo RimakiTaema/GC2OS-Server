@@ -45,7 +45,7 @@ async def api_shop_player_data(request: Request):
     user_info, device_info = await decrypt_fields_to_user_info(decrypted_fields)
 
     if user_info:
-        my_stage, my_avatar = await get_user_entitlement_from_devices(user_info['id'])
+        my_stage, my_avatar = await get_user_entitlement_from_devices(user_info['id'], should_cap=False)
     elif device_info:
         my_stage = device_info['my_stage']
         my_avatar = device_info['my_avatar']
@@ -241,7 +241,7 @@ async def api_shop_purchase_item(request: Request):
         user_info, device_info = await decrypt_fields_to_user_info(decrypted_fields)
 
         if user_info:
-            my_stage, my_avatar = await get_user_entitlement_from_devices(user_info['id'])
+            my_stage, my_avatar = await get_user_entitlement_from_devices(user_info['id'], should_cap=False)
         elif device_info:
             my_stage = device_info['my_stage']
             my_avatar = device_info['my_avatar']

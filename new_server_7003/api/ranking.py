@@ -173,7 +173,7 @@ async def user_song_list(request: Request):
 
     my_stage = []
     if user_info:
-        my_stage, _ = await get_user_entitlement_from_devices(user_info["id"])
+        my_stage, _ = await get_user_entitlement_from_devices(user_info["id"], should_cap=False)
     elif device_info:
         my_stage = device_info['my_stage']
 
