@@ -14,13 +14,15 @@ To use it, you need to
 
 4) Generate a `batch_token` in the database through some means (database edit, discord bot, etc.). The schema of the table is as follows: 
 
-- id: auto generated primary key, ignore
+- `id`: auto generated primary key, simply ignore
 
-- token: The key string itself. Required field
+- `batch_token`: The key string itself. Required field, String value
 
-- expire_at: Unix timestamp integer of the expiration time. Required field.
+- `expire_at`: Datetime string of when the token expires. Required field, String value (e.g. 2026-11-27 06:37:48.170791)
 
-- sid, verification_name, verification_id: Not required in the public version. Fields for bots to link with 3rd party accounts.
+- `uses_left`: Amount of uses the token can accrude before it stops working. Each time it queries the `/batch` api, this count will decrease by 1. Required field, Integer value.
+
+- `auth_id`, `created_at`, `updated_at`: Simply left blank for local uses.
 
 5) Open the app and enter the server base URL and token, click download and wait!
 

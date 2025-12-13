@@ -58,7 +58,7 @@ async def serve_file(request: Request):
 
     if os.path.isfile(file_path):
         # get size of file
-        if AUTHORIZATION_MODE != 0:
+        if AUTHORIZATION_MODE != 0 and not batch_result:
             file_size = os.path.getsize(file_path)
             await log_download(bind_result['user_id'], filename, file_size)
         return FileResponse(file_path)

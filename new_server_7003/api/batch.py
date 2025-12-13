@@ -19,28 +19,26 @@ async def batch_handler(request: Request):
     if platform not in ["Android", "iOS"]:
         return HTMLResponse(content="Invalid platform", status_code=400)
 
-    query = batch_tokens.select().where(batch_tokens.c.token == token)
+    query = batch_tokens.select().where(batch_tokens.c.batch_token == token)
     result = await player_database.fetch_one(query)
 
     if not result:
         return HTMLResponse(content="Invalid token", status_code=400)
 
-    if result['expire_at'] < int(time.time()):
+    if result['expire_at'] < datetime.utcnow():
         return HTMLResponse(content="Token expired", status_code=400)
     
     uses_left = result['uses_left']
     if uses_left > 0:
         uses_left -= 1
-    
+        update_query = batch_tokens.update().where(batch_tokens.c.batch_token == token).values(
+            uses_left=uses_left,
+            updated_at=datetime.utcnow()
+        )
+        await player_database.execute(update_query)
+
     else:
-        uses_left = -1
         return HTMLResponse(content="No uses left", status_code=400)
-    
-    update_query = batch_tokens.update().where(batch_tokens.c.token == token).values(
-        uses_left=uses_left,
-        updated_at=datetime.utcnow()
-    )
-    await player_database.execute(update_query)
     
     with open(os.path.join('api/config/', 'download_manifest.json'), 'r', encoding='utf-8') as f:
             stage_manifest = json.load(f)
