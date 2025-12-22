@@ -1,14 +1,23 @@
 # Groove-Coaster-2OS-Server
 
+So this is basically a continuation of the original project, but cleaner and with way less bugs. 
+
+If you want to contribute, feel free!  Just know that I'll be checking everything before merging it in. Always happy to have more people helping out - we're all in this together as a community.
+
+Want more details?  Check out the old README below.
+
+Oh, and heads up - we're currently running the `7003` Server. If you're looking for the old server stuff, just browse through the others folder. 
+
+Thanks for stopping by! -aitsuki
+
+---
+
+<details>
+<summary><h1>Past README</h1></summary>
+
 A small local server for `Groove Coaster 2: Original Style`, implemented with `Python` and ~~Flask~~ `Starlette`. 
 
 一个基于`Python`和~~Flask~~`Starlette`的微型`Groove Coaster 2: Original Style`本地服务器。
-
-<details>
-<summary>English</summary>
-<br>
-
-## Introduction
 
 This project is for game preservation purposes only. Creative liberty and conveniences have been taken when it comes to specific implementation. The goal is not to ensure 1:1 behavior, but to guarrantee the minimum viability of playing this game. It is provided as-is, per the GPLv2 license.
 
@@ -777,4 +786,5 @@ Taito shutted down the server on March 31st, 2025, marking the completion of pro
 
 Overall, the project was a resounding success. The initial goal of creating a feature-rich private server was accomplished, with bonus points such as the toolchain, 4MAX expansion, and leaderboard dataset. If we were to nitpick, the save data hard limit was not addressed, various promotional material was not acquired from the server, and the leaderboard was not completely scraped.
 
+</details>
 </details>
