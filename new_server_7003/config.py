@@ -102,4 +102,4 @@ DEBUG = True
 '''
 Expermential Features
 '''
-EXP_JSON_DATA = True
+EXP_JSON_DATA = False

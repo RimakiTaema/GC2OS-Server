@@ -2,7 +2,7 @@ import json
 import os
 import xml.etree.ElementTree as ET
 from api.logger import *
-
+from api.javaxmlruntime import *
 SONG_LIST = []
 AVATAR_LIST = []
 ITEM_LIST = []
@@ -113,21 +113,21 @@ def init_templates_exp_json():
             EXP_UNLOCKED_SONGS = json.load(f)
 
         with open(os.path.join(json_path, 'stage_pak.json'), 'r', encoding='utf-8') as f:
-            stage_pak_json = json.load(f)
+            stage_pak_xml = jsontoxml(f)
 
         with open(os.path.join(json_path, 'start.json'), 'r', encoding='utf-8') as f:
-            START_JSON = json.load(f)
+            START_XML = jsontoxml(f)
 
         with open(os.path.join(json_path, 'sync.json'), 'r', encoding='utf-8') as f:
-            SYNC_JSON = json.load(f)
+            SYNC_XML = jsontoxml(f)
 
         with open(os.path.join(json_path, 'result.json'), 'r', encoding='utf-8') as f:
-            RESULT_JSON = json.load(f)
+            RESULT_XML = jsontoxml(f)
 
-        if stage_pak_json is not None and START_JSON is not None and SYNC_JSON is not None:
-            stage_pak_root = stage_pak_json.getroot()
-            start_root = START_JSON.getroot()
-            sync_root = SYNC_JSON.getroot()
+        if stage_pak_xml is not None and START_XML is not None and SYNC_XML is not None:
+            stage_pak_root = stage_pak_xml.getroot()
+            start_root = START_XML.getroot()
+            sync_root = SYNC_XML.getroot()
             for stage in stage_pak_root.findall("stage_pak"):
                 if stage.find("id") is not None:
                     start_root.append(stage)
