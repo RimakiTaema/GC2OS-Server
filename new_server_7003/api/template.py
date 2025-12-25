@@ -1,7 +1,7 @@
 import json
 import os
 import xml.etree.ElementTree as ET
-from api.logger import warn_log
+from api.logger import warn_log, module_log, error_log
 from api.javaxmlruntime import jsontoxml
 
 SONG_LIST = []
@@ -134,12 +134,12 @@ def init_templates_exp_json():
                     start_root.append(stage)
                     sync_root.append(stage)
         else:
-            error_log("One or more JSON files failed to load or is empty.", "EXP_TEMPLATES")
+            error_log(f"One or more JSON files failed to load or is empty.", "EXP_TEMPLATES")
 
 
-        module_log("Templates initialized successfully.", "EXP_TEMPLATES")
+        module_log(f"Templates initialized successfully.", "EXP_TEMPLATES")
     
     except FileNotFoundError as e:
-        error_log('One of following errors has been occured \n {e}', 'EXP_TEMPLATES')
+        error_log(f'One of following errors has been occured \n {e}', 'EXP_TEMPLATES')
     except json.JSONDecodeError as e:
-        error_log('Error while Decoding JSON \n {e}', 'EXP_TEMPLATES')
+        error_log(f'Error while Decoding JSON \n {e}', 'EXP_TEMPLATES')
