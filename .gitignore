@@ -1,2 +1,5 @@
 __pycache__/
 player.db
+cache.db
+files/
+config.py
